@@ -1,4 +1,4 @@
-# TR_Grafkom
+# TR_Grafkom_A_2
 
 Kelompok 2
 
