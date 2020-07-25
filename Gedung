@@ -1,0 +1,1097 @@
+#include <stdlib.h>
+#include <glut.h>
+
+int is_depth;
+float xrot = 0.0f;
+float yrot = 0.0f;
+float xdiff = 0.0f;
+float ydiff = 0.0f;
+
+bool mouseDown = false;
+
+static float ypos = 0, zpos = 0, xpos = 0, a = 0, b = 0, c = -10;
+
+void resize(int width, int height)
+{
+	if (height == 0) height = 1;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(65.0, width / height, 1.0, 400.0);
+	glTranslatef(0.0, -75.0, -150.0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void jendelaUtama() {
+	glColor3ub(105.0f, 121.0f, 145.0f);;//sisi depan
+	glVertex3d(-15, 90, 7);
+	glVertex3d(15, 90, 7);
+	glVertex3d(15, -2, 7);
+	glVertex3d(-15, -2, 7);
+
+	glColor3ub(58.0f, 67.0f, 80.0f);;//right
+	glVertex3d(15, -2, 7);
+	glVertex3d(15, -2, -20);
+	glVertex3d(15, 90, -20);
+	glVertex3d(15, 90, 7);
+
+	glColor3ub(105.0f, 121.0f, 145.0f);;//back
+	glVertex3d(-15, -2, -20);
+	glVertex3d(15, -2, -20);
+	glVertex3d(15, 90, -20);
+	glVertex3d(-15, 90, -20);
+
+	glColor3ub(58.0f, 67.0f, 80.0f);;//left
+	glVertex3d(-15, -2, 7);
+	glVertex3d(-15, -2, -20);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(-15, 90, 7);
+
+	glColor3ub(45, 51, 62);;//bottom
+	glVertex3d(-15, -1.9, 7);
+	glVertex3d(15, -1.9, 7);
+	glVertex3d(15, -1.9, -20);
+	glVertex3d(-15, -1.9, -20);
+
+	glColor3ub(45, 51, 62);;//top
+	glVertex3d(15, 90, 7);
+	glVertex3d(-15, 90, 7);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(15, 90, -20);
+}
+
+void jembatan() {
+
+	glColor3ub(8.0f, 0.0f, 0.0f);;//sisi depan
+	glVertex3d(15, 5, 7);
+	glVertex3d(-15, 5, 7);
+	glVertex3d(-15, 5, 20);
+	glVertex3d(15, 5, 20);
+}
+
+void pintu() {
+	glColor3ub(23.0f, 0.0f, 1.0f);;//sisi depan
+	glVertex3d(-10, 35, 7.1);
+	glVertex3d(10, 35, 7.1);
+	glVertex3d(10, 5, 7.1);
+	glVertex3d(-10, 5, 7.1);
+
+}
+
+void MenaraKecil1A() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(45.1, 45, 0);
+	glVertex3d(25, 45, 0);
+	glVertex3d(25, -2, 0);
+	glVertex3d(45.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(45.1, -2, 0);
+	glVertex3d(45.1, -2, 15);
+	glVertex3d(45.1, 45, 15);
+	glVertex3d(45.1, 45, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(45.1, -2, 15);
+	glVertex3d(25, -2, 15);
+	glVertex3d(25, 45, 15);
+	glVertex3d(45.1, 45, 15);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(25, -2, 0);
+	glVertex3d(25, -2, 15);
+	glVertex3d(25, 45, 15);
+	glVertex3d(25, 45, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(45.1, -1.9, 0);
+	glVertex3d(25, -1.9, 0);
+	glVertex3d(25, -1.9, 15);
+	glVertex3d(45.1, -1.9, 15);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(25, 40, 0);
+	glVertex3d(45.1, 40, 0);
+	glVertex3d(45.1, 40, 15);
+	glVertex3d(25, 40, 15);
+}
+void MenaraKecil1B() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(40, 105, 0);
+	glVertex3d(30, 105, 0);
+	glVertex3d(30, -2, 0);
+	glVertex3d(40, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(40, -2, 0);
+	glVertex3d(40, -2, 15);
+	glVertex3d(40, 105, 15);
+	glVertex3d(40, 105, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(40, -2, 15);
+	glVertex3d(30, -2, 15);
+	glVertex3d(30, 105, 15);
+	glVertex3d(40, 105, 15);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(30, -2, 0);
+	glVertex3d(30, -2, 15);
+	glVertex3d(30, 105, 15);
+	glVertex3d(30, 105, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(40, -1.9, 0);
+	glVertex3d(30, -1.9, 0);
+	glVertex3d(30, -1.9, 15);
+	glVertex3d(40, -1.9, 15);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(30, 100, 0);
+	glVertex3d(40, 100, 0);
+	glVertex3d(40, 100, 15);
+	glVertex3d(30, 100, 15);
+}
+
+void MenaraKecil2A() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-45.1, 45, 0);
+	glVertex3d(-25, 45, 0);
+	glVertex3d(-25, -2, 0);
+	glVertex3d(-45.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-45.1, -2, 0);
+	glVertex3d(-45.1, -2, 15);
+	glVertex3d(-45.1, 45, 15);
+	glVertex3d(-45.1, 45, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-45.1, -2, 15);
+	glVertex3d(-25, -2, 15);
+	glVertex3d(-25, 45, 15);
+	glVertex3d(-45.1, 45, 15);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-25, -2, 0);
+	glVertex3d(-25, -2, 15);
+	glVertex3d(-25, 45, 15);
+	glVertex3d(-25, 45, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-45.1, -1.9, 0);
+	glVertex3d(-25, -1.9, 0);
+	glVertex3d(-25, -1.9, 15);
+	glVertex3d(-45.1, -1.9, 15);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-25, 40, 0);
+	glVertex3d(-45.1, 40, 0);
+	glVertex3d(-45.1, 40, 15);
+	glVertex3d(-25, 40, 15);
+}
+void MenaraKecil2B() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-40, 105, 0);
+	glVertex3d(-30, 105, 0);
+	glVertex3d(-30, -2, 0);
+	glVertex3d(-40, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-40, -2, 0);
+	glVertex3d(-40, -2, 15);
+	glVertex3d(-40, 105, 15);
+	glVertex3d(-40, 105, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-40, -2, 15);
+	glVertex3d(-30, -2, 15);
+	glVertex3d(-30, 105, 15);
+	glVertex3d(-40, 105, 15);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-30, -2, 0);
+	glVertex3d(-30, -2, 15);
+	glVertex3d(-30, 105, 15);
+	glVertex3d(-30, 105, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-40, -1.9, 0);
+	glVertex3d(-30, -1.9, 0);
+	glVertex3d(-30, -1.9, 15);
+	glVertex3d(-40, -1.9, 15);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-30, 100, 0);
+	glVertex3d(-40, 100, 0);
+	glVertex3d(-40, 100, 15);
+	glVertex3d(-30, 100, 15);
+}
+
+void MenaraDepan1() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 105, 0);
+	glVertex3d(95, 105, 0);
+	glVertex3d(95, -2, 0);
+	glVertex3d(60.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, 0);
+	glVertex3d(60.1, -2, -50);
+	glVertex3d(60.1, 105, -50);
+	glVertex3d(60.1, 105, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -50);
+	glVertex3d(95, -2, -50);
+	glVertex3d(95, 105, -50);
+	glVertex3d(60.1, 105, -50);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(95, -2, 0);
+	glVertex3d(95, -2, -50);
+	glVertex3d(95, 105, -50);
+	glVertex3d(95, 105, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, 0);
+	glVertex3d(95, -1.9, 0);
+	glVertex3d(95, -1.9, -50);
+	glVertex3d(60.1, -1.9, -50);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(95, 97, 0);
+	glVertex3d(60.1, 97, 0);
+	glVertex3d(60.1, 97, -50);
+	glVertex3d(95, 97, -50);
+}
+void MenaraDepan2() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-60.1, 105, 0);
+	glVertex3d(-95, 105, 0);
+	glVertex3d(-95, -2, 0);
+	glVertex3d(-60.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-60.1, -2, 0);
+	glVertex3d(-60.1, -2, -50);
+	glVertex3d(-60.1, 105, -50);
+	glVertex3d(-60.1, 105, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-60.1, -2, -50);
+	glVertex3d(-95, -2, -50);
+	glVertex3d(-95, 105, -50);
+	glVertex3d(-60.1, 105, -50);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-95, -2, 0);
+	glVertex3d(-95, -2, -50);
+	glVertex3d(-95, 105, -50);
+	glVertex3d(-95, 105, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-60.1, -1.9, 0);
+	glVertex3d(-95, -1.9, 0);
+	glVertex3d(-95, -1.9, -50);
+	glVertex3d(-60.1, -1.9, -50);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-95, 97, 0);
+	glVertex3d(-60.1, 97, 0);
+	glVertex3d(-60.1, 97, -50);
+	glVertex3d(-95, 97, -50);
+}
+void MenaraDepan3() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 105, -260);
+	glVertex3d(95, 105, -260);
+	glVertex3d(95, -2, -260);
+	glVertex3d(60.1, -2, -260);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, -260);
+	glVertex3d(60.1, -2, -310);
+	glVertex3d(60.1, 105, -310);
+	glVertex3d(60.1, 105, -260);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -310);
+	glVertex3d(95, -2, -310);
+	glVertex3d(95, 105, -310);
+	glVertex3d(60.1, 105, -310);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(95, -2, -260);
+	glVertex3d(95, -2, -310);
+	glVertex3d(95, 105, -310);
+	glVertex3d(95, 105, -260);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, -260);
+	glVertex3d(95, -1.9, -260);
+	glVertex3d(95, -1.9, -310);
+	glVertex3d(60.1, -1.9, -310);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(95, 97, -260);
+	glVertex3d(60.1, 97, -260);
+	glVertex3d(60.1, 97, -310);
+	glVertex3d(95, 97, -310);
+}
+void MenaraDepan4() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-40.1, 105, -260);
+	glVertex3d(-75, 105, -260);
+	glVertex3d(-75, -2, -260);
+	glVertex3d(-40, -2, -260);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-40, -2, -260);
+	glVertex3d(-40, -2, -310);
+	glVertex3d(-40, 105, -310);
+	glVertex3d(-40, 105, -260);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-40, -2, -310);
+	glVertex3d(-75, -2, -310);
+	glVertex3d(-75, 105, -310);
+	glVertex3d(-40, 105, -310);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-75, -2, -260);
+	glVertex3d(-75, -2, -310);
+	glVertex3d(-75, 105, -310);
+	glVertex3d(-75, 105, -260);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-40, -1.9, -260);
+	glVertex3d(-75, -1.9, -260);
+	glVertex3d(-75, -1.9, -310);
+	glVertex3d(-40, -1.9, -310);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-75, 97, -260);
+	glVertex3d(-40, 97, -260);
+	glVertex3d(-40, 97, -310);
+	glVertex3d(-75, 97, -310);
+}
+
+void gedungDepan() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-15, 90, 7);
+	glVertex3d(15, 90, 7);
+	glVertex3d(15, -2, 7);
+	glVertex3d(-15, -2, 7);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(15, -2, 7);
+	glVertex3d(15, -2, -20);
+	glVertex3d(15, 90, -20);
+	glVertex3d(15, 90, 7);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-15, -2, -20);
+	glVertex3d(15, -2, -20);
+	glVertex3d(15, 90, -20);
+	glVertex3d(-15, 90, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-15, -2, 7);
+	glVertex3d(-15, -2, -20);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(-15, 90, 7);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-15, -1.9, 7);
+	glVertex3d(15, -1.9, 7);
+	glVertex3d(15, -1.9, -20);
+	glVertex3d(-15, -1.9, -20);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(15, 90, 7);
+	glVertex3d(-15, 90, 7);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(15, 90, -20);
+}
+void gedungDepanAtas() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-15, 120, -2);
+	glVertex3d(15, 120, -2);
+	glVertex3d(15, 90.1, -2);
+	glVertex3d(-15, 90.1, -2);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(15, 90.1, -2);
+	glVertex3d(15, 90.1, -20);
+	glVertex3d(15, 120, -20);
+	glVertex3d(15, 120, -2);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-15, 90.1, -20);
+	glVertex3d(15, 90.1, -20);
+	glVertex3d(15, 120, -20);
+	glVertex3d(-15, 120, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-15, 90.1, -2);
+	glVertex3d(-15, 90.1, -20);
+	glVertex3d(-15, 120, -20);
+	glVertex3d(-15, 120, -2);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-15, 90.1, -2);
+	glVertex3d(15, 90.1, -2);
+	glVertex3d(15, 90.1, -20);
+	glVertex3d(-15, 90.1, -20);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(15, 120, -2);
+	glVertex3d(-15, 120, -2);
+	glVertex3d(-15, 120, -20);
+	glVertex3d(15, 120, -20);
+}
+void gedungDepanKanan() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(15.1, 90, 0);
+	glVertex3d(30, 90, 0);
+	glVertex3d(30, -2, 0);
+	glVertex3d(15.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(15.1, -2, 0);
+	glVertex3d(15.1, -2, -20);
+	glVertex3d(15.1, 90, -20);
+	glVertex3d(15.1, 90, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(15.1, -2, -20);
+	glVertex3d(30, -2, -20);
+	glVertex3d(30, 90, -20);
+	glVertex3d(15.1, 90, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(30, -2, 0);
+	glVertex3d(30, -2, -20);
+	glVertex3d(30, 90, -20);
+	glVertex3d(30, 90, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(15.1, -1.9, 0);
+	glVertex3d(30, -1.9, 0);
+	glVertex3d(30, -1.9, -20);
+	glVertex3d(15.1, -1.9, -20);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(30, 90, 0);
+	glVertex3d(-15, 90, 0);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(30, 90, -20);
+}
+void gedungDepanKanan2() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(30.1, 90, 0);
+	glVertex3d(80, 90, -20);
+	glVertex3d(80, -2, -20);
+	glVertex3d(30.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(30.1, -2, 0);
+	glVertex3d(30.1, -2, -20);
+	glVertex3d(30.1, 90, -20);
+	glVertex3d(30.1, 90, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(30.1, -2, -20);
+	glVertex3d(60, -2, -33);
+	glVertex3d(60, 90, -33);
+	glVertex3d(30.1, 90, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(80, -2, -19.6);
+	glVertex3d(60, -2, -33);
+	glVertex3d(60, 90, -33);
+	glVertex3d(80, 90, -19.6);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(80, 90, -19.6);
+	glVertex3d(30, 90, 0);
+	glVertex3d(30, 90, -20);
+	glVertex3d(60, 90, -33);
+
+	glColor3ub(115, 114, 89);;//btm
+	glVertex3d(80, -1.9, -19.6);
+	glVertex3d(30, -1.9, 0);
+	glVertex3d(30, -1.9, -20);
+	glVertex3d(60, -1.9, -33);
+}
+void gedungDepanKanan3() {
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(60, -2, -30);
+	glVertex3d(60, -2, -290);
+	glVertex3d(60, 90, -290);
+	glVertex3d(60, 90, -30);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(80, -2, -290);
+	glVertex3d(60, -2, -290);
+	glVertex3d(60, 90, -290);
+	glVertex3d(80, 90, -290);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(80, -2, -20);
+	glVertex3d(80, -2, -290);
+	glVertex3d(80, 90, -290);
+	glVertex3d(80, 90, -20);
+
+	glColor3ub(115, 114, 89);;//bottom
+	glVertex3d(60, -1.9, -30);
+	glVertex3d(80, -1.9, -19.9);
+	glVertex3d(80, -1.9, -290);
+	glVertex3d(60, -1.9, -290);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(80, 90, -19.9);
+	glVertex3d(60, 90, -30);
+	glVertex3d(60, 90, -290);
+	glVertex3d(80, 90, -290);
+
+}
+void gedungDepanKiri() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-15.1, 90, 0);
+	glVertex3d(-30, 90, 0);
+	glVertex3d(-30, -2, 0);
+	glVertex3d(-15.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-15.1, -2, 0);
+	glVertex3d(-15.1, -2, -20);
+	glVertex3d(-15.1, 90, -20);
+	glVertex3d(-15.1, 90, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-15.1, -2, -20);
+	glVertex3d(-30, -2, -20);
+	glVertex3d(-30, 90, -20);
+	glVertex3d(-15.1, 90, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-30, -2, 0);
+	glVertex3d(-30, -2, -20);
+	glVertex3d(-30, 90, -20);
+	glVertex3d(-30, 90, 0);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-15.1, -1.9, 0);
+	glVertex3d(-30, -1.9, 0);
+	glVertex3d(-30, -1.9, -20);
+	glVertex3d(-15.1, -1.9, -20);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-30, 90, 0);
+	glVertex3d(-15, 90, 0);
+	glVertex3d(-15, 90, -20);
+	glVertex3d(-30, 90, -20);
+}
+void gedungDepanKiri2() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-30.1, 90, 0);
+	glVertex3d(-80, 90, -20);
+	glVertex3d(-80, -2, -20);
+	glVertex3d(-30.1, -2, 0);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-30.1, -2, 0);
+	glVertex3d(-30.1, -2, -20);
+	glVertex3d(-30.1, 90, -20);
+	glVertex3d(-30.1, 90, 0);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-30.1, -2, -20);
+	glVertex3d(-60, -2, -33);
+	glVertex3d(-60, 90, -33);
+	glVertex3d(-30.1, 90, -20);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-80, -2, -19.6);
+	glVertex3d(-60, -2, -33);
+	glVertex3d(-60, 90, -33);
+	glVertex3d(-80, 90, -19.6);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-80, 90, -19.6);
+	glVertex3d(-30, 90, 0);
+	glVertex3d(-30, 90, -20);
+	glVertex3d(-60, 90, -33);
+
+	glColor3ub(115, 114, 89);;//btm
+	glVertex3d(-80, -1.9, -19.6);
+	glVertex3d(-30, -1.9, 0);
+	glVertex3d(-30, -1.9, -20);
+	glVertex3d(-60, -1.9, -33);
+}
+void gedungDepanKiri3() {
+
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-60, -2, -30);
+	glVertex3d(-60, -2, -90);
+	glVertex3d(-60, 90, -90);
+	glVertex3d(-60, 90, -30);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(-80, -2, -90);
+	glVertex3d(-60, -2, -90);
+	glVertex3d(-60, 90, -90);
+	glVertex3d(-80, 90, -90);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-80, -2, -20);
+	glVertex3d(-80, -2, -90);
+	glVertex3d(-80, 90, -90);
+	glVertex3d(-80, 90, -20);
+
+	glColor3ub(115, 114, 89);;//bottom
+	glVertex3d(-60, -1.9, -30);
+	glVertex3d(-80, -1.9, -19.9);
+	glVertex3d(-80, -1.9, -90);
+	glVertex3d(-60, -1.9, -90);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-80, 90, -19.9);
+	glVertex3d(-60, 90, -30);
+	glVertex3d(-60, 90, -90);
+	glVertex3d(-80, 90, -90);
+
+}
+void gedungAntara() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 90, -70);
+	glVertex3d(-60.1, 90, -70);
+	glVertex3d(-60.1, -2, -70);
+	glVertex3d(60.1, -2, -70);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, -70);
+	glVertex3d(60.1, -2, -90);
+	glVertex3d(60.1, 90, -90);
+	glVertex3d(60.1, 90, -70);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -90);
+	glVertex3d(-60.1, -2, -90);
+	glVertex3d(-60.1, 90, -90);
+	glVertex3d(60.1, 90, -90);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-60.1, -2, -70);
+	glVertex3d(-60.1, -2, -90);
+	glVertex3d(-60.1, 90, -90);
+	glVertex3d(-60.1, 90, -70);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, -70);
+	glVertex3d(-60.1, -1.9, -70);
+	glVertex3d(-60.1, -1.9, -90);
+	glVertex3d(60.1, -1.9, -90);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-60.1, 90, -70);
+	glVertex3d(60.1, 90, -70);
+	glVertex3d(60.1, 90, -90);
+	glVertex3d(-60.1, 90, -90);
+}
+void Menara() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 165, -50);
+	glVertex3d(20, 165, -50);
+	glVertex3d(20, -2, -50);
+	glVertex3d(60.1, -2, -50);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, -50);
+	glVertex3d(60.1, -2, -100);
+	glVertex3d(60.1, 165, -100);
+	glVertex3d(60.1, 165, -50);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -100);
+	glVertex3d(20, -2, -100);
+	glVertex3d(20, 165, -100);
+	glVertex3d(60.1, 165, -100);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(20, -2, -50);
+	glVertex3d(20, -2, -100);
+	glVertex3d(20, 165, -100);
+	glVertex3d(20, 165, -50);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, -50);
+	glVertex3d(20, -1.9, -50);
+	glVertex3d(20, -1.9, -100);
+	glVertex3d(60.1, -1.9, -100);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(20, 165, -50);
+	glVertex3d(60.1, 165, -50);
+	glVertex3d(60.1, 165, -100);
+	glVertex3d(20, 165, -100);
+}
+void Menara2() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(50.1, 185, -60);
+	glVertex3d(30, 185, -60);
+	glVertex3d(30, -2, -60);
+	glVertex3d(50.1, -2, -60);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(50.1, -2, -60);
+	glVertex3d(50.1, -2, -90);
+	glVertex3d(50.1, 185, -90);
+	glVertex3d(50.1, 185, -60);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(50.1, -2, -90);
+	glVertex3d(30, -2, -90);
+	glVertex3d(30, 185, -90);
+	glVertex3d(50.1, 185, -90);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(30, -2, -60);
+	glVertex3d(30, -2, -90);
+	glVertex3d(30, 185, -90);
+	glVertex3d(30, 185, -60);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(50.1, -1.9, -60);
+	glVertex3d(30, -1.9, -60);
+	glVertex3d(30, -1.9, -90);
+	glVertex3d(50.1, -1.9, -90);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(30, 185, -60);
+	glVertex3d(50.1, 185, -60);
+	glVertex3d(50.1, 185, -90);
+	glVertex3d(30, 185, -90);
+}
+
+void gedungTengahAntara() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 90, -180);
+	glVertex3d(-50.1, 90, -180);
+	glVertex3d(-50.1, -2, -180);
+	glVertex3d(60.1, -2, -180);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, -180);
+	glVertex3d(60.1, -2, -200);
+	glVertex3d(60.1, 90, -200);
+	glVertex3d(60.1, 90, -180);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -200);
+	glVertex3d(-50.1, -2, -200);
+	glVertex3d(-50.1, 90, -200);
+	glVertex3d(60.1, 90, -200);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-50.1, -2, -180);
+	glVertex3d(-50.1, -2, -200);
+	glVertex3d(-50.1, 90, -200);
+	glVertex3d(-50.1, 90, -180);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, -180);
+	glVertex3d(-50.1, -1.9, -180);
+	glVertex3d(-50.1, -1.9, -200);
+	glVertex3d(60.1, -1.9, -200);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-50.1, 90, -180);
+	glVertex3d(60.1, 90, -180);
+	glVertex3d(60.1, 90, -200);
+	glVertex3d(-50.1, 90, -200);
+}
+void gedungTengahKiri() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(-80, -2, -90);
+	glVertex3d(-60, -2, -90);
+	glVertex3d(-60, 90, -90);
+	glVertex3d(-80, 90, -90);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-60, -2, -90);
+	glVertex3d(-20, -2, -290);
+	glVertex3d(-20, 90, -290);
+	glVertex3d(-60, 90, -90);
+
+
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(-80, -2, -90);
+	glVertex3d(-40, -2, -290);
+	glVertex3d(-40, 90, -290);
+	glVertex3d(-80, 90, -90);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(-60, -1.9, -90);
+	glVertex3d(-80, -1.9, -90);
+	glVertex3d(-20, -1.9, -290);
+	glVertex3d(-20, -1.9, -290);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-60, 90, -90);
+	glVertex3d(-80, 90, -90);
+	glVertex3d(-40, 90, -290);
+	glVertex3d(-20, 90, -290);
+}
+
+void gedungPersediaan() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(0, 105, -200);
+	glVertex3d(50, 105, -200);
+	glVertex3d(50, -2, -200);
+	glVertex3d(0, -2, -200);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(50, -2, -200);
+	glVertex3d(50, -2, -260);
+	glVertex3d(50, 105, -260);
+	glVertex3d(50, 105, -200);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(0, -2, -260);
+	glVertex3d(50, -2, -260);
+	glVertex3d(50, 105, -260);
+	glVertex3d(0, 105, -260);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(0, -2, -200);
+	glVertex3d(0, -2, -260);
+	glVertex3d(0, 105, -260);
+	glVertex3d(0, 105, -200);
+
+	glColor3ub(115, 114, 89);;//bottom
+	glVertex3d(0, -1.9, -200);
+	glVertex3d(50, -1.9, -200);
+	glVertex3d(50, -1.9, -260);
+	glVertex3d(0, -1.9, -260);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(50, 80, -200);
+	glVertex3d(-15, 80, -200);
+	glVertex3d(-15, 80, -270);
+	glVertex3d(50, 80, -270);
+}
+void gedungBelakang() {
+	glColor3ub(220.0f, 219.0f, 171.0f);;//sisi depan
+	glVertex3d(60.1, 90, -270);
+	glVertex3d(-40.1, 90, -270);
+	glVertex3d(-40.1, -2, -270);
+	glVertex3d(60.1, -2, -270);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//left
+	glVertex3d(60.1, -2, -270);
+	glVertex3d(60.1, -2, -290);
+	glVertex3d(60.1, 90, -290);
+	glVertex3d(60.1, 90, -270);
+
+	glColor3ub(220.0f, 219.0f, 171.0f);;//back
+	glVertex3d(60.1, -2, -290);
+	glVertex3d(-40.1, -2, -290);
+	glVertex3d(-40.1, 90, -290);
+	glVertex3d(60.1, 90, -290);
+
+	glColor3ub(169.0f, 168.0f, 131.0f);;//right
+	glVertex3d(-40.1, -2, -270);
+	glVertex3d(-40.1, -2, -290);
+	glVertex3d(-40.1, 90, -290);
+	glVertex3d(-40.1, 90, -270);
+
+	glColor3ub(0.115, 114, 89);;//bottom
+	glVertex3d(60.1, -1.9, -270);
+	glVertex3d(-40.1, -1.9, -270);
+	glVertex3d(-40.1, -1.9, -290);
+	glVertex3d(60.1, -1.9, -290);
+
+	glColor3ub(115, 114, 89);;//top
+	glVertex3d(-40.1, 90, -270);
+	glVertex3d(60.1, 90, -270);
+	glVertex3d(60.1, 90, -290);
+	glVertex3d(-40.1, 90, -290);
+}
+
+void halaman() {
+	glColor3ub(76.0f, 101.0f, 46.0f);
+	glVertex3d(-170, -2, 22);
+	glVertex3d(170, -2, 22);
+	glVertex3d(170, -2, -310);
+	glVertex3d(-170, -2, -310);
+}
+
+void init(void)
+{
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glOrtho(-30, 30, -150, 15, -35, 35);
+	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_SMOOTH);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(80.0, 2.2, 1.0, 10.0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void display(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glTranslatef(a, b, c);
+	gluLookAt(0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(xrot, 1, 0, 0);
+	glRotatef(yrot, 0, 1, 0);
+
+	glBegin(GL_QUADS);
+	halaman();
+
+	//JEMBATAN dll
+	jembatan();
+	pintu();
+	//jendelaUtama();
+	//MENARA DEPAN
+
+		MenaraKecil1A();
+		MenaraKecil1B();
+		MenaraKecil2A();
+		MenaraKecil2B();
+		MenaraDepan1();
+		MenaraDepan2();
+		MenaraDepan3();
+		MenaraDepan4();
+
+
+	//GEDUNG DEPAN
+	gedungDepan();
+	gedungDepanAtas();
+	gedungDepanKanan();
+	gedungDepanKanan2();
+	gedungDepanKanan2();
+	gedungDepanKanan3();
+	gedungDepanKiri();
+	gedungDepanKiri2();
+	gedungDepanKiri3();
+	gedungAntara();
+	Menara();
+	Menara2();
+
+	//GEDUNG TENGAH
+	gedungTengahAntara();
+	gedungTengahKiri();
+
+	//GEDUNG BELAKANG
+	gedungPersediaan();
+	gedungBelakang();
+	glEnd();
+
+	glutSwapBuffers();
+}
+
+void idle()
+{
+	if (!mouseDown)
+	{
+		xrot += 0.3f;
+		yrot += 0.4f;
+	}
+	glutPostRedisplay();
+}
+
+void mouse(int button, int state, int x, int y)
+{
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		mouseDown = true;
+		xdiff = x - yrot;
+		ydiff = -y + xrot;
+	}
+	else
+		mouseDown = false;
+}
+
+void mouseMotion(int x, int y)
+{
+	if (mouseDown)
+	{
+		yrot = x - xdiff;
+		xrot = y + ydiff;
+
+		glutPostRedisplay();
+	}
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+	switch (key) {
+
+	case 'x':
+		xpos = xpos + 5;
+		if (xpos > 360) xpos = 0;
+		glutPostRedisplay();
+		break;
+	case 'y':
+		ypos = ypos + 5;
+		if (ypos > 360) ypos = 0;
+		glutPostRedisplay();
+		break;
+	case 'z':
+		zpos = zpos + 1;
+		if (zpos > 360) zpos = 0;
+
+		glutPostRedisplay();
+		break;
+	case 'w':
+		b = b + 1;
+		glutPostRedisplay();
+		break;
+	case 's':
+		b = b - 1;
+		glutPostRedisplay();
+		break;
+	case 'a':
+		a = a + 1;
+		glutPostRedisplay();
+		break;
+	case 'd':
+		a = a - 1;
+		glutPostRedisplay();
+		break;
+	case 'q':
+		c = c + 1;
+		glutPostRedisplay();
+		break;
+	case 'e':
+		c = c - 1;
+		glutPostRedisplay();
+		break;
+
+	}
+}
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInitWindowSize(1200, 700);
+	glutInitWindowPosition(70, 20);
+	glutCreateWindow("TR KELOMPOK 2 - HLUBOKA CASTLE");
+	glutReshapeFunc(resize);
+	init();
+	glutMouseFunc(mouse);
+	glutMotionFunc(mouseMotion);
+	glutDisplayFunc(display);
+	glutKeyboardFunc(keyboard);
+	glutMainLoop();
+	return 0;
+}
